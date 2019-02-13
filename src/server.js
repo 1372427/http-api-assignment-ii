@@ -1,13 +1,38 @@
 const http = require('http');
 const url = require('url');
+const query = require('querystring');
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
+const handlePost = (request, response, parsedUrl) => {
+  if (parsedUrl.pathname === '/addUser') {
+    const body = [];
+
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      jsonHandler.addUser(request, response, bodyParams);
+    });
+  }
+};
+
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
-
+console.log(request.method);
   switch (request.method) {
     case 'GET':
       if (parsedUrl.pathname === '/') {
@@ -20,7 +45,7 @@ const onRequest = (request, response) => {
         jsonHandler.notReal(request, response);
       }
       break;
-    case 'HEAD':
+    case 'GET':
       if (parsedUrl.pathname === '/getUsers') {
         jsonHandler.getUsersMeta(request, response);
       } else {
@@ -28,9 +53,7 @@ const onRequest = (request, response) => {
       }
       break;
     case 'POST':
-      if (parsedUrl.pathname === '/addUser') {
-
-      }
+      handlePost(request, response, parsedUrl);
       break;
     default:
       jsonHandler.notReal(request, response);
