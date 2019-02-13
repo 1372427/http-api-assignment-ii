@@ -10,8 +10,8 @@
 
     const handleResponse = (xhr, parseResponse) => {
       const content = document.querySelector('#content');
-      console.log(xhr.response)
-      let message = JSON.parse(xhr.response).message;
+
+      let message = xhr.response? JSON.parse(xhr.response).message || (xhr.response) : "";
 
       switch (xhr.status) {
         case 200:
@@ -21,7 +21,7 @@
           content.innerHTML = `<b>Created</b><p>${message}</p>`;
           break;
         case 204:
-          content.innerHTML = `<b>Updated</b><p>${message}</p>`;
+          content.innerHTML = `<b>Updated (No Content)</b><p>${message}</p>`;
         break;
         case 404:
           content.innerHTML = `<b>Resource Not Found</b><p>${message}</p>`;

@@ -32,7 +32,6 @@ const handlePost = (request, response, parsedUrl) => {
 
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
-console.log(request.method);
   switch (request.method) {
     case 'GET':
       if (parsedUrl.pathname === '/') {
@@ -45,7 +44,7 @@ console.log(request.method);
         jsonHandler.notReal(request, response);
       }
       break;
-    case 'GET':
+    case 'HEAD':
       if (parsedUrl.pathname === '/getUsers') {
         jsonHandler.getUsersMeta(request, response);
       } else {
