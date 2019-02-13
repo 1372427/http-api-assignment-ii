@@ -1,0 +1,19 @@
+{
+  "name": "http-api-assignment-ii",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1372427/http-api-assignment-ii.git"
+  },
+  "author": "Rebecca Medina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1372427/http-api-assignment-ii/issues"
+  },
+  "homepage": "https://github.com/1372427/http-api-assignment-ii#readme"
+}
